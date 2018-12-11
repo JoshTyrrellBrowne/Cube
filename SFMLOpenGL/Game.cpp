@@ -2,11 +2,21 @@
 
 bool updatable = false;
 
-gpp::Vector3 v3;
+MyVector3 v3;
 
 Game::Game() : window(VideoMode(800, 600), "OpenGL Cube")
 {
 	index = glGenLists(1);
+
+	MyVector3 v1{ 1.0f, 1.0f, -15.0f };
+	MyVector3 v2{ -1.0f, 1.0f, -15.0f };
+	MyVector3 v3{ -1.0f, -1.0f, -15.0f };
+	MyVector3 v4{ 1.0f, -1.0f, -15.0f };
+
+	MyVector3 v5{ 1.0f, 1.0f, -5.0f };
+	MyVector3 v6{ -1.0f, 1.0f, -5.0f };
+	MyVector3 v7{ -1.0f, -1.0f, -5.0f };
+	MyVector3 v8{ 1.0f, -1.0f, -5.0f };
 }
 
 Game::~Game(){}
@@ -52,19 +62,50 @@ void Game::initialize()
 	glNewList(index, GL_COMPILE);
 	glBegin(GL_QUADS);
 	{
-		//Front Face
+		// whichever is last will be drawn ahead
+
+		//Front Face - Blue
 		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(v3.getX(), 1.0f, -5.0f);
+		glVertex3f(1.0f, 1.0f, -5.0f);
 		glVertex3f(-1.0f, 1.0f, -5.0f);
 		glVertex3f(-1.0f, -1.0f, -5.0f);
 		glVertex3f(1.0f, -1.0f, -5.0f);
 
-		//Back Face
+		//Back Face - GREEN
 		glColor3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(1.0f, 1.0f, -15.0f);
 		glVertex3f(-1.0f, 1.0f, -15.0f);
 		glVertex3f(-1.0f, -1.0f, -15.0f);
 		glVertex3f(1.0f, -1.0f, -15.0f);
+
+
+		// Top Face - Red
+		glColor3f(1.0, 0.0, 0.0);
+		glVertex3f(1.0f, 1.0f, -5.0f);
+		glVertex3f(-1.0f, 1.0f, -5.0f);
+		glVertex3f(-1.0f, 1.0f, -15.0f);
+		glVertex3f(1.0f, 1.0f, -15.0f);
+
+		// Bottom Face - Yellow
+		glColor3f(1.0, 1.0, 0.0);
+		glVertex3f(-1.0f, -1.0f, -5.0f);
+		glVertex3f(1.0f, -1.0f, -5.0f);
+		glVertex3f(1.0f, -1.0f, -15.0f);
+		glVertex3f(-1.0f, -1.0f, -15.0f);
+
+		// Right Face - Pink
+		glColor3f(1.0, 0.0, 1.0);
+		glVertex3f(1.0f, 1.0f, -5.0f);
+		glVertex3f(1.0f, -1.0f, -5.0f);
+		glVertex3f(1.0f, -1.0f, -15.0f);
+		glVertex3f(1.0f, 1.0f, -15.0f);
+
+		// Left Face - White
+		glColor3f(1.0, 2.0, 1.0);
+		glVertex3f(-1.0f, -1.0f, -5.0f);
+		glVertex3f(-1.0f, 1.0f, -5.0f);
+		glVertex3f(-1.0f, 1.0f, -15.0f);
+		glVertex3f(-1.0f, -1.0f, -15.0f);
 
 		//Complete the faces of the Cube
 	}
@@ -108,8 +149,10 @@ void Game::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	cout << "Drawing Cube " << endl;
-	glLoadIdentity();
-	glRotatef(rotationAngle, 0, 0, 1); // Rotates the camera on Y Axis
+	//glLoadIdentity();
+	//glRotatef(rotationAngle, 0, 0, 1); // Rotates the camera on Y Axis
+	//glRotatef(rotationAngle, 0, 1, 0); // Rotates the camera on Y Axis
+	checkKeyPress();
 
 	glCallList(1);
 
@@ -120,5 +163,29 @@ void Game::draw()
 void Game::unload()
 {
 	cout << "Cleaning up" << endl;
+}
+
+void Game::checkKeyPress()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		glRotatef(rotationAngle, 0, 0, 1);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		glRotatef(rotationAngle, 0, 1, 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{
+		glRotatef(rotationAngle, 1, 0, 0);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{
+		glRotatef(rotationAngle, 0, 0, 1);
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		glLoadIdentity();
+	}
 }
 
