@@ -2,21 +2,10 @@
 
 bool updatable = false;
 
-MyVector3 v3;
 
 Game::Game() : window(VideoMode(800, 600), "OpenGL Cube")
 {
 	index = glGenLists(1);
-
-	// initialize vector array
-	/*startingVectors[0] = v1;
-	startingVectors[1] = v2;
-	startingVectors[2] = v3;
-	startingVectors[3] = v4;
-	startingVectors[4] = v5;
-	startingVectors[5] = v6;
-	startingVectors[6] = v7;
-	startingVectors[7] = v8;*/
 
 	vectors[0] = v1;
 	vectors[1] = v2;
@@ -265,6 +254,50 @@ void Game::checkKeyPress()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		glLoadIdentity();
+	}
+	// SCALE...
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			vectors[i] = (MyMatrix3::scale(0.99) * vectors[i]);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			vectors[i] = (MyMatrix3::scale(1.01) * vectors[i]);
+		}
+	}
+	// TRANSLATION...
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			vectors[i] = vectors[i] + MyVector3(0,0.01,0);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			vectors[i] = vectors[i] + MyVector3(0, -0.01, 0);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			vectors[i] = vectors[i] + MyVector3(0.01, 0, 0);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			vectors[i] = vectors[i] + MyVector3(-0.01, 0, 0);
+		}
 	}
 
 	/*vectors[i] = vectors[i] + (MyMatrix3::rotationX(-0.001) * vectors[i]);*/   //may be useful
