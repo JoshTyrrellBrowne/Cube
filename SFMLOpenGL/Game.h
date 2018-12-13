@@ -31,8 +31,9 @@ public:
 	MyVector3 v7{ -1.0f, -1.0f, 1.0f };
 	MyVector3 v8{ 1.0f, -1.0f, 1.0f };
 
-	MyVector3 vectors[8];
-	//MyVector3 startingVectors[8];
+	MyVector3 resultVectors[8];
+	MyVector3 startingVectors[8];
+	MyVector3 displacementVectors[8];
 
 private:
 	Window window;
@@ -42,6 +43,7 @@ private:
 	void draw();
 	void unload();
 	void checkKeyPress();
+	void updateResultVecs();
 
 	GLuint index;
 	Clock clock;

@@ -7,14 +7,16 @@ Game::Game() : window(VideoMode(800, 600), "OpenGL Cube")
 {
 	index = glGenLists(1);
 
-	vectors[0] = v1;
-	vectors[1] = v2;
-	vectors[2] = v3;
-	vectors[3] = v4;
-	vectors[4] = v5;
-	vectors[5] = v6;
-	vectors[6] = v7;
-	vectors[7] = v8;
+	startingVectors[0] = v1;
+	startingVectors[1] = v2;
+	startingVectors[2] = v3;
+	startingVectors[3] = v4;
+	startingVectors[4] = v5;
+	startingVectors[5] = v6;
+	startingVectors[6] = v7;
+	startingVectors[7] = v8;
+
+	
 }
 
 Game::~Game(){}
@@ -66,46 +68,46 @@ void Game::initialize()
 
 		//Front Face - Blue
 		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(vectors[4].x, vectors[4].y, vectors[4].z);
-		glVertex3f(vectors[5].x, vectors[5].y, vectors[5].z);
-		glVertex3f(vectors[6].x, vectors[6].y, vectors[6].z);
-		glVertex3f(vectors[7].x, vectors[7].y, vectors[7].z);
+		glVertex3f(resultVectors[4].x, resultVectors[4].y, resultVectors[4].z);
+		glVertex3f(resultVectors[5].x, resultVectors[5].y, resultVectors[5].z);
+		glVertex3f(resultVectors[6].x, resultVectors[6].y, resultVectors[6].z);
+		glVertex3f(resultVectors[7].x, resultVectors[7].y, resultVectors[7].z);
 
 		//Back Face - GREEN
 		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(vectors[0].x, vectors[0].y, vectors[0].z);
-		glVertex3f(vectors[1].x, vectors[1].y, vectors[1].z);
-		glVertex3f(vectors[2].x, vectors[2].y, vectors[2].z);
-		glVertex3f(vectors[3].x, vectors[3].y, vectors[3].z);
+		glVertex3f(resultVectors[0].x, resultVectors[0].y, resultVectors[0].z);
+		glVertex3f(resultVectors[1].x, resultVectors[1].y, resultVectors[1].z);
+		glVertex3f(resultVectors[2].x, resultVectors[2].y, resultVectors[2].z);
+		glVertex3f(resultVectors[3].x, resultVectors[3].y, resultVectors[3].z);
 
 
 		// Top Face - Red
 		glColor3f(1.0, 0.0, 0.0);
-		glVertex3f(vectors[4].x, vectors[4].y, vectors[4].z);
-		glVertex3f(vectors[5].x, vectors[5].y, vectors[5].z);
-		glVertex3f(vectors[1].x, vectors[1].y, vectors[1].z);
-		glVertex3f(vectors[0].x, vectors[0].y, vectors[0].z);
+		glVertex3f(resultVectors[4].x, resultVectors[4].y, resultVectors[4].z);
+		glVertex3f(resultVectors[5].x, resultVectors[5].y, resultVectors[5].z);
+		glVertex3f(resultVectors[1].x, resultVectors[1].y, resultVectors[1].z);
+		glVertex3f(resultVectors[0].x, resultVectors[0].y, resultVectors[0].z);
 
 		// Bottom Face - Yellow
 		glColor3f(1.0, 1.0, 0.0);
-		glVertex3f(vectors[6].x, vectors[6].y, vectors[6].z);
-		glVertex3f(vectors[7].x, vectors[7].y, vectors[7].z);
-		glVertex3f(vectors[3].x, vectors[3].y, vectors[3].z);
-		glVertex3f(vectors[2].x, vectors[2].y, vectors[2].z);
+		glVertex3f(resultVectors[6].x, resultVectors[6].y, resultVectors[6].z);
+		glVertex3f(resultVectors[7].x, resultVectors[7].y, resultVectors[7].z);
+		glVertex3f(resultVectors[3].x, resultVectors[3].y, resultVectors[3].z);
+		glVertex3f(resultVectors[2].x, resultVectors[2].y, resultVectors[2].z);
 
 		// Right Face - Pink
 		glColor3f(1.0, 0.0, 1.0);
-		glVertex3f(vectors[4].x, vectors[4].y, vectors[4].z);
-		glVertex3f(vectors[7].x, vectors[7].y, vectors[7].z);
-		glVertex3f(vectors[3].x, vectors[3].y, vectors[3].z);
-		glVertex3f(vectors[0].x, vectors[0].y, vectors[0].z);
+		glVertex3f(resultVectors[4].x, resultVectors[4].y, resultVectors[4].z);
+		glVertex3f(resultVectors[7].x, resultVectors[7].y, resultVectors[7].z);
+		glVertex3f(resultVectors[3].x, resultVectors[3].y, resultVectors[3].z);
+		glVertex3f(resultVectors[0].x, resultVectors[0].y, resultVectors[0].z);
 
 		// Left Face - White
 		glColor3f(1.0, 2.0, 1.0);
-		glVertex3f(vectors[6].x, vectors[6].y, vectors[6].z);
-		glVertex3f(vectors[5].x, vectors[5].y, vectors[5].z);
-		glVertex3f(vectors[1].x, vectors[1].y, vectors[1].z);
-		glVertex3f(vectors[2].x, vectors[2].y, vectors[2].z);
+		glVertex3f(resultVectors[6].x, resultVectors[6].y, resultVectors[6].z);
+		glVertex3f(resultVectors[5].x, resultVectors[5].y, resultVectors[5].z);
+		glVertex3f(resultVectors[1].x, resultVectors[1].y, resultVectors[1].z);
+		glVertex3f(resultVectors[2].x, resultVectors[2].y, resultVectors[2].z);
 
 		//Complete the faces of the Cube
 	}
@@ -116,6 +118,7 @@ void Game::initialize()
 void Game::update()
 {
 	checkKeyPress();
+	updateResultVecs();
 
 	glNewList(index, GL_COMPILE);
 	glBegin(GL_QUADS);
@@ -124,46 +127,46 @@ void Game::update()
 
 		//Front Face - Blue
 		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex3f(vectors[4].x, vectors[4].y, vectors[4].z);
-		glVertex3f(vectors[5].x, vectors[5].y, vectors[5].z);
-		glVertex3f(vectors[6].x, vectors[6].y, vectors[6].z);
-		glVertex3f(vectors[7].x, vectors[7].y, vectors[7].z);
+		glVertex3f(resultVectors[4].x, resultVectors[4].y, resultVectors[4].z);
+		glVertex3f(resultVectors[5].x, resultVectors[5].y, resultVectors[5].z);
+		glVertex3f(resultVectors[6].x, resultVectors[6].y, resultVectors[6].z);
+		glVertex3f(resultVectors[7].x, resultVectors[7].y, resultVectors[7].z);
 
 		//Back Face - GREEN
 		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(vectors[0].x, vectors[0].y, vectors[0].z);
-		glVertex3f(vectors[1].x, vectors[1].y, vectors[1].z);
-		glVertex3f(vectors[2].x, vectors[2].y, vectors[2].z);
-		glVertex3f(vectors[3].x, vectors[3].y, vectors[3].z);
+		glVertex3f(resultVectors[0].x, resultVectors[0].y, resultVectors[0].z);
+		glVertex3f(resultVectors[1].x, resultVectors[1].y, resultVectors[1].z);
+		glVertex3f(resultVectors[2].x, resultVectors[2].y, resultVectors[2].z);
+		glVertex3f(resultVectors[3].x, resultVectors[3].y, resultVectors[3].z);
 
 
 		// Top Face - Red
 		glColor3f(1.0, 0.0, 0.0);
-		glVertex3f(vectors[4].x, vectors[4].y, vectors[4].z);
-		glVertex3f(vectors[5].x, vectors[5].y, vectors[5].z);
-		glVertex3f(vectors[1].x, vectors[1].y, vectors[1].z);
-		glVertex3f(vectors[0].x, vectors[0].y, vectors[0].z);
+		glVertex3f(resultVectors[4].x, resultVectors[4].y, resultVectors[4].z);
+		glVertex3f(resultVectors[5].x, resultVectors[5].y, resultVectors[5].z);
+		glVertex3f(resultVectors[1].x, resultVectors[1].y, resultVectors[1].z);
+		glVertex3f(resultVectors[0].x, resultVectors[0].y, resultVectors[0].z);
 
 		// Bottom Face - Yellow
 		glColor3f(1.0, 1.0, 0.0);
-		glVertex3f(vectors[6].x, vectors[6].y, vectors[6].z);
-		glVertex3f(vectors[7].x, vectors[7].y, vectors[7].z);
-		glVertex3f(vectors[3].x, vectors[3].y, vectors[3].z);
-		glVertex3f(vectors[2].x, vectors[2].y, vectors[2].z);
+		glVertex3f(resultVectors[6].x, resultVectors[6].y, resultVectors[6].z);
+		glVertex3f(resultVectors[7].x, resultVectors[7].y, resultVectors[7].z);
+		glVertex3f(resultVectors[3].x, resultVectors[3].y, resultVectors[3].z);
+		glVertex3f(resultVectors[2].x, resultVectors[2].y, resultVectors[2].z);
 
 		// Right Face - Pink
 		glColor3f(1.0, 0.0, 1.0);
-		glVertex3f(vectors[4].x, vectors[4].y, vectors[4].z);
-		glVertex3f(vectors[7].x, vectors[7].y, vectors[7].z);
-		glVertex3f(vectors[3].x, vectors[3].y, vectors[3].z);
-		glVertex3f(vectors[0].x, vectors[0].y, vectors[0].z);
+		glVertex3f(resultVectors[4].x, resultVectors[4].y, resultVectors[4].z);
+		glVertex3f(resultVectors[7].x, resultVectors[7].y, resultVectors[7].z);
+		glVertex3f(resultVectors[3].x, resultVectors[3].y, resultVectors[3].z);
+		glVertex3f(resultVectors[0].x, resultVectors[0].y, resultVectors[0].z);
 
 		// Left Face - White
 		glColor3f(1.0, 2.0, 1.0);
-		glVertex3f(vectors[6].x, vectors[6].y, vectors[6].z);
-		glVertex3f(vectors[5].x, vectors[5].y, vectors[5].z);
-		glVertex3f(vectors[1].x, vectors[1].y, vectors[1].z);
-		glVertex3f(vectors[2].x, vectors[2].y, vectors[2].z);
+		glVertex3f(resultVectors[6].x, resultVectors[6].y, resultVectors[6].z);
+		glVertex3f(resultVectors[5].x, resultVectors[5].y, resultVectors[5].z);
+		glVertex3f(resultVectors[1].x, resultVectors[1].y, resultVectors[1].z);
+		glVertex3f(resultVectors[2].x, resultVectors[2].y, resultVectors[2].z);
 
 		//Complete the faces of the Cube
 	}
@@ -223,32 +226,33 @@ void Game::unload()
 
 void Game::checkKeyPress()
 {
+	// rotations...
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = (MyMatrix3::rotationX(0.001) * vectors[i]);
+			startingVectors[i] = (MyMatrix3::rotationX(0.001) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = (MyMatrix3::rotationX(-0.001) * vectors[i]);
+			startingVectors[i] = (MyMatrix3::rotationX(-0.001) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = (MyMatrix3::rotationZ(0.001) * vectors[i]);
+			startingVectors[i] = (MyMatrix3::rotationZ(0.001) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = (MyMatrix3::rotationZ(-0.001) * vectors[i]);
+			startingVectors[i] = (MyMatrix3::rotationZ(-0.001) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -260,14 +264,14 @@ void Game::checkKeyPress()
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = (MyMatrix3::scale(0.99) * vectors[i]);
+			startingVectors[i] = (MyMatrix3::scale(0.99) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = (MyMatrix3::scale(1.01) * vectors[i]);
+			startingVectors[i] = (MyMatrix3::scale(1.01) * startingVectors[i]);
 		}
 	}
 	// TRANSLATION...
@@ -275,31 +279,39 @@ void Game::checkKeyPress()
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = vectors[i] + MyVector3(0,0.01,0);
+			displacementVectors[i] = displacementVectors[i] + MyVector3(0,0.01,0);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = vectors[i] + MyVector3(0, -0.01, 0);
+			displacementVectors[i] = displacementVectors[i] + MyVector3(0, -0.01, 0);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = vectors[i] + MyVector3(0.01, 0, 0);
+			displacementVectors[i] = displacementVectors[i] + MyVector3(0.01, 0, 0);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			vectors[i] = vectors[i] + MyVector3(-0.01, 0, 0);
+			displacementVectors[i] = displacementVectors[i] + MyVector3(-0.01, 0, 0);
 		}
 	}
 
 	/*vectors[i] = vectors[i] + (MyMatrix3::rotationX(-0.001) * vectors[i]);*/   //may be useful
+}
+
+void Game::updateResultVecs()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		resultVectors[i] = startingVectors[i] + displacementVectors[i];
+	}
 }
 
