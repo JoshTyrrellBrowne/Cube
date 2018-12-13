@@ -16,7 +16,11 @@ Game::Game() : window(VideoMode(800, 600), "OpenGL Cube")
 	startingVectors[6] = v7;
 	startingVectors[7] = v8;
 
-	
+	// initialize displacement to 1
+	for (int i = 0; i < 8; i++)
+	{
+		displacementVectors[i] = { 1,1,1 };
+	}
 }
 
 Game::~Game(){}
@@ -231,28 +235,28 @@ void Game::checkKeyPress()
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			startingVectors[i] = (MyMatrix3::rotationX(0.001) * startingVectors[i]);
+			startingVectors[i] = (MyMatrix3::rotationX(0.01) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			startingVectors[i] = (MyMatrix3::rotationX(-0.001) * startingVectors[i]);
+			startingVectors[i] = (MyMatrix3::rotationX(-0.01) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			startingVectors[i] = (MyMatrix3::rotationZ(0.001) * startingVectors[i]);
+			startingVectors[i] = (MyMatrix3::rotationZ(0.01) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			startingVectors[i] = (MyMatrix3::rotationZ(-0.001) * startingVectors[i]);
+			startingVectors[i] = (MyMatrix3::rotationZ(-0.01) * startingVectors[i]);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -279,28 +283,72 @@ void Game::checkKeyPress()
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			displacementVectors[i] = displacementVectors[i] + MyVector3(0,0.01,0);
+			// vector addition way..
+			/*displacementVectors[i] = displacementVectors[i] + MyVector3(0,0.01,0);*/
+
+			// Matrix Translation way..
+			if (displacementVectors[i].z >= 0)// if z < 0 the translation will be opposite
+			{
+				displacementVectors[i] = MyMatrix3::translation(MyVector3(0, 0.01, 0)) * displacementVectors[i];
+			}
+			else
+			{
+				displacementVectors[i] = MyMatrix3::translation(MyVector3(0, -0.01, 0)) * displacementVectors[i];
+			}
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			displacementVectors[i] = displacementVectors[i] + MyVector3(0, -0.01, 0);
+			// vector addition way..
+			/*displacementVectors[i] = displacementVectors[i] + MyVector3(0, -0.01, 0);*/
+
+			// Matrix Translation way..
+			if (displacementVectors[i].z >= 0)// if z < 0 the translation will be opposite
+			{
+				displacementVectors[i] = MyMatrix3::translation(MyVector3(0, -0.01, 0)) * displacementVectors[i];
+			}
+			else
+			{
+				displacementVectors[i] = MyMatrix3::translation(MyVector3(0, 0.01, 0)) * displacementVectors[i];
+			}
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			displacementVectors[i] = displacementVectors[i] + MyVector3(0.01, 0, 0);
+			// vector addition way..
+			/*displacementVectors[i] = displacementVectors[i] + MyVector3(0.01, 0, 0);*/
+
+			// Matrix Translation way..
+			if (displacementVectors[i].z >= 0)// if z < 0 the translation will be opposite
+			{
+				displacementVectors[i] = MyMatrix3::translation(MyVector3(0.01, 0, 0)) * displacementVectors[i];
+			}
+			else
+			{
+				displacementVectors[i] = MyMatrix3::translation(MyVector3(-0.01, 0, 0)) * displacementVectors[i];
+			}
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		for (int i = 0; i < 8; i++)
 		{
-			displacementVectors[i] = displacementVectors[i] + MyVector3(-0.01, 0, 0);
+			// vector addition way..
+			/*displacementVectors[i] = displacementVectors[i] + MyVector3(-0.01, 0, 0);*/
+
+			// Matrix Translation way..
+			if (displacementVectors[i].z >= 0)	// if z < 0 the translation will be opposite
+			{
+				displacementVectors[i] = MyMatrix3::translation(MyVector3(-0.01, 0, 0)) * displacementVectors[i];
+			}
+			else
+			{
+				displacementVectors[i] = MyMatrix3::translation(MyVector3(0.01, 0, 0)) * displacementVectors[i];
+			}
 		}
 	}
 
